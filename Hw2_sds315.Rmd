@@ -1,5 +1,5 @@
 ---
-title: "Homework 3"
+title: "Homework 2"
 author: "Saksham Shori, SS229822, Github: https://github.com/sshori14/HW2code-sds315"
 output:
   pdf_document:
@@ -15,10 +15,11 @@ output:
 knitr::opts_chunk$set(fig.height=3, fig.width=4, warning=FALSE, tidy=TRUE, tidy.opts=list(width.cutoff=60))
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message = FALSE, warning = FALSE}
 library(dplyr)
 library(magrittr)
 library(ggplot2)
+suppressWarnings(library(dplyr))
 setwd("/Users/sakshamshori/Documents/RStudio/sds315")
 ```
 
@@ -85,7 +86,7 @@ ggplot(bikeperhr) + geom_line(aes(x = hr, y = total)) + labs(title = "Hours Bike
 
 * This line graph portrays the average bike rentals on a daily basis per hour throughout the 24 hours of a day. Based on the graph, the most bikes are rented in the evening around 5 P.M. with over 400+ bikes being rented a this hour.
 
-```{r, echo = FALSE}
+```{r, echo = FALSE, message = FALSE, warnings = FALSE}
 #Plot B:  faceted line graph showing average bike rentals by hour of the day, faceted to whether it is a working day (workingday)
 avg_bikerental <- bikes %>%
   group_by(hr, workingday) %>%
@@ -94,7 +95,7 @@ ggplot(avg_bikerental, aes(x=hr, y=avg_rentals)) + facet_wrap(~ workingday) + ge
 ```
 * This graph portrays a similar metric to that of the previous question, however, specifying whether it is a working day or not. The left graph (0) portrays the rentals throughout a non working day while the right graph (1) portrays the rentals throughout a working day, showing significantly much more fluctuation and inconsistency in the rental values throughout the day.
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message = FALSE, warnings = FALSE}
 #Plot C: 
 morning_rides <- bikes %>%
   filter(hr == 9) %>% group_by(weathersit, workingday) %>%
@@ -108,7 +109,7 @@ ggplot(morning_rides, aes(x = weathersit, y = avg_rentals)) + geom_bar(stat = "i
 
 # **__Problem 3__**
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message = FALSE, warnings = FALSE}
 #Plot 1:
 metro = read.csv("capmetro_UT.csv")
 names(metro)
@@ -137,7 +138,7 @@ ggplot(metro, aes(x = temperature, y = boarding, color = weekend)) + geom_point(
 
 # **__Problem 4__**
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message = FALSE, warnings = FALSE}
 billboard = read.csv("billboard.csv")
 #PartA: Make a table of the top 10 most popular songs since 1958, as measured by the total number of weeks that a song spent on the Billboard Top 100.
 #billinfo = %>%
@@ -159,14 +160,14 @@ ggplot(uniquemusic, aes(x=year, y=unique_songs)) + geom_line(col = "brown") + la
 
 * Music diversity can be analyzed by this graph as the x-axis portrays the year and the y-axis portrays the number of unique songs that were present on the Billboard Top 100. As the decades continued, musical diversity had a signifncant decline, especially from ~1970 to 2000 with the number of unique songs decreasing by over 50% from 800 to around 400. 
 
-```{r, echo = FALSE}
+```{r, echo = FALSE , message = FALSE, warnings = FALSE}
 #Part C:19 artists in U.S. musical history since 1958 who have had at least 30 songs that were “ten-week hits.”
 tenweek_hits <- billboard %>% group_by(performer, song) %>%
-  summarize(total_weeks = n(), .groups = "drop") %>% filter(total_weeks >= 10)
+  summarize(total_weeks = n()) %>% filter(total_weeks >= 10)
 #filter to > 10 weeks on chart
 
 top10artists = tenweek_hits %>%
-  group_by(performer) %>% summarize(num_tenweeks = n(), .groups = "drop") %>% filter(num_tenweeks >= 30) %>% arrange(desc(num_tenweeks))
+  group_by(performer) %>% summarize(num_tenweeks = n()) %>% filter(num_tenweeks >= 30) %>% arrange(desc(num_tenweeks))
 #put in descending order to see top artistis with more 10 week hits
 
 #ten-week hits per artist
