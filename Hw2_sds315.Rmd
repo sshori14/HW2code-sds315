@@ -1,7 +1,6 @@
 ---
 title: "Homework 3"
-author: "Saksham Shori, SS229822"
-link: https://github.com/sshori14/HW2code-sds315
+author: "Saksham Shori, SS229822, Github: https://github.com/sshori14/HW2code-sds315"
 output:
   pdf_document:
     toc: true
